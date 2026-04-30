@@ -145,13 +145,15 @@ Check the photo (if attached) is a real personal photo of a person, not a stock 
           ? "rejected"
           : "needs_human_review";
 
-    await supabaseAdmin.from("moderation_results").insert({
-      campaign_id: campaign.id,
-      decision: ai.decision,
-      confidence: ai.confidence,
-      reason: ai.reason,
-      raw_response: ai as unknown as Record<string, unknown>,
-    });
+    await supabaseAdmin.from("moderation_results").insert([
+      {
+        campaign_id: campaign.id,
+        decision: ai.decision,
+        confidence: ai.confidence,
+        reason: ai.reason,
+        raw_response: ai as unknown as never,
+      },
+    ]);
 
     await supabaseAdmin
       .from("campaigns")
