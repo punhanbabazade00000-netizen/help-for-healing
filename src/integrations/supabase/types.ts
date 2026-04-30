@@ -14,16 +14,206 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      campaigns: {
+        Row: {
+          condition: string
+          created_at: string
+          currency: string
+          goal_amount: number
+          id: string
+          location: string | null
+          moderation_reason: string | null
+          patient_age: number | null
+          patient_name: string
+          photo_url: string | null
+          raised_amount: number
+          status: Database["public"]["Enums"]["campaign_status"]
+          story: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          condition: string
+          created_at?: string
+          currency?: string
+          goal_amount: number
+          id?: string
+          location?: string | null
+          moderation_reason?: string | null
+          patient_age?: number | null
+          patient_name: string
+          photo_url?: string | null
+          raised_amount?: number
+          status?: Database["public"]["Enums"]["campaign_status"]
+          story: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          condition?: string
+          created_at?: string
+          currency?: string
+          goal_amount?: number
+          id?: string
+          location?: string | null
+          moderation_reason?: string | null
+          patient_age?: number | null
+          patient_name?: string
+          photo_url?: string | null
+          raised_amount?: number
+          status?: Database["public"]["Enums"]["campaign_status"]
+          story?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      donations: {
+        Row: {
+          amount: number
+          anonymous: boolean
+          campaign_id: string
+          created_at: string
+          donor_name: string | null
+          id: string
+          message: string | null
+        }
+        Insert: {
+          amount: number
+          anonymous?: boolean
+          campaign_id: string
+          created_at?: string
+          donor_name?: string | null
+          id?: string
+          message?: string | null
+        }
+        Update: {
+          amount?: number
+          anonymous?: boolean
+          campaign_id?: string
+          created_at?: string
+          donor_name?: string | null
+          id?: string
+          message?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "donations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      moderation_results: {
+        Row: {
+          campaign_id: string
+          confidence: number | null
+          created_at: string
+          decision: Database["public"]["Enums"]["moderation_decision"]
+          id: string
+          raw_response: Json | null
+          reason: string | null
+        }
+        Insert: {
+          campaign_id: string
+          confidence?: number | null
+          created_at?: string
+          decision: Database["public"]["Enums"]["moderation_decision"]
+          id?: string
+          raw_response?: Json | null
+          reason?: string | null
+        }
+        Update: {
+          campaign_id?: string
+          confidence?: number | null
+          created_at?: string
+          decision?: Database["public"]["Enums"]["moderation_decision"]
+          id?: string
+          raw_response?: Json | null
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "moderation_results_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          country: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "family"
+      campaign_status:
+        | "pending_review"
+        | "approved"
+        | "rejected"
+        | "needs_human_review"
+        | "completed"
+      moderation_decision: "approve" | "reject" | "flag_for_review"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +340,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "family"],
+      campaign_status: [
+        "pending_review",
+        "approved",
+        "rejected",
+        "needs_human_review",
+        "completed",
+      ],
+      moderation_decision: ["approve", "reject", "flag_for_review"],
+    },
   },
 } as const
