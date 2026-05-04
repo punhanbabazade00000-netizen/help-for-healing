@@ -43,22 +43,28 @@ function HomePage() {
     <Layout>
       {/* Hero */}
       <section className="relative overflow-hidden">
+        {/* Drifting decorative blobs */}
+        <div aria-hidden className="pointer-events-none absolute -left-24 -top-24 -z-10 h-72 w-72 rounded-full bg-sage-soft/60 blur-3xl animate-blob" />
+        <div aria-hidden className="pointer-events-none absolute -right-32 top-40 -z-10 h-80 w-80 rounded-full bg-sage/30 blur-3xl animate-blob" style={{ animationDelay: "-4s" }} />
+
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2 md:gap-16 md:px-8 md:py-24">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
+            <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground animate-fade-in-up animate-pulse-ring">
               <Sparkles className="h-3 w-3" /> AI-verified campaigns
             </span>
-            <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.1] md:text-6xl">
-              When a loved one is ill, no family should have to face it alone.
+            <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.1] md:text-6xl animate-fade-in-up delay-100">
+              When a loved one is ill,{" "}
+              <span className="shimmer-text">no family</span> should have to face it alone.
             </h1>
-            <p className="mt-5 max-w-lg text-lg text-muted-foreground">
+            <p className="mt-5 max-w-lg text-lg text-muted-foreground animate-fade-in-up delay-200">
               Compassion Bridge helps families share their story and receive verified donations
               to pay for medical care — quickly, transparently, and safely.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3 animate-fade-in-up delay-300">
               <Link to="/campaigns">
-                <Button size="lg" className="gap-2">
-                  Donate to a family <ArrowRight className="h-4 w-4" />
+                <Button size="lg" className="gap-2 group">
+                  Donate to a family
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </Link>
               <Link to="/submit">
@@ -67,7 +73,7 @@ function HomePage() {
                 </Button>
               </Link>
             </div>
-            <div className="mt-10 flex items-center gap-6 text-sm text-muted-foreground">
+            <div className="mt-10 flex items-center gap-6 text-sm text-muted-foreground animate-fade-in-up delay-400">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-primary" />
                 <span>Each campaign reviewed</span>
@@ -78,14 +84,15 @@ function HomePage() {
               </div>
             </div>
           </div>
-          <div className="relative">
-            <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-secondary/60 blur-2xl" />
+          <div className="relative animate-scale-in delay-200">
+            <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-secondary/60 blur-2xl animate-float-soft" />
             <img
               src={heroImg}
               alt="Hands gently holding a sage leaf — a symbol of care"
               width={1600}
               height={1200}
-              className="rounded-[2rem] shadow-[var(--shadow-card)]"
+              className="rounded-[2rem] shadow-[var(--shadow-card)] animate-float-soft"
+              style={{ animationDelay: "-2s" }}
             />
           </div>
         </div>
@@ -118,8 +125,14 @@ function HomePage() {
             </div>
           ) : (
             <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {featured.map((c) => (
-                <CampaignCard key={c.id} c={c} />
+              {featured.map((c, i) => (
+                <div
+                  key={c.id}
+                  className="animate-fade-in-up"
+                  style={{ animationDelay: `${i * 0.12}s` }}
+                >
+                  <CampaignCard c={c} />
+                </div>
               ))}
             </div>
           )}
@@ -147,8 +160,12 @@ function HomePage() {
                 t: "Donors give securely",
                 d: "Donations are processed through a trusted payment provider — we never store credit card numbers.",
               },
-            ].map((s) => (
-              <div key={s.n} className="rounded-2xl border border-border/60 bg-card p-7">
+            ].map((s, i) => (
+              <div
+                key={s.n}
+                className="rounded-2xl border border-border/60 bg-card p-7 hover-lift animate-fade-in-up"
+                style={{ animationDelay: `${i * 0.12}s` }}
+              >
                 <div className="font-display text-3xl text-primary">{s.n}</div>
                 <h3 className="mt-3 font-display text-xl font-semibold">{s.t}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>

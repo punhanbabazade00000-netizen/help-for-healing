@@ -25,9 +25,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-8">
-        <Link to="/" className="flex items-center gap-2 font-display text-xl">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-primary/15 text-primary">
-            <Heart className="h-4 w-4" fill="currentColor" />
+        <Link to="/" className="group flex items-center gap-2 font-display text-xl">
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-primary/15 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-8deg]">
+            <Heart className="h-4 w-4 transition-transform duration-500 group-hover:scale-110" fill="currentColor" />
           </span>
           <span className="font-semibold tracking-tight">Compassion Bridge</span>
         </Link>
@@ -37,7 +37,7 @@ export function Header() {
             <Link
               key={l.to}
               to={l.to}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="story-link text-sm text-muted-foreground transition-colors hover:text-foreground"
               activeProps={{ className: "text-foreground font-medium" }}
             >
               {l.label}
