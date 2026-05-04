@@ -35,7 +35,7 @@ export function CampaignCard({ c }: { c: CampaignCardData }) {
     <Link
       to="/campaigns/$id"
       params={{ id: c.id }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card hover-lift"
     >
       <div className="aspect-[4/3] overflow-hidden bg-secondary">
         {c.photo_url ? (
